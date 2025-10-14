@@ -6,7 +6,7 @@
 /*   By: slambert <slambert@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 14:38:27 by slambert          #+#    #+#             */
-/*   Updated: 2025/10/14 13:34:00 by slambert         ###   ########.fr       */
+/*   Updated: 2025/10/14 13:43:43 by slambert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	pointer_handler(va_list ap)
 	}
 }
 
-
+/* 
 int	main(void)
 {
 	const char	*p = "%d%d%d";
@@ -133,4 +133,4 @@ int	main(void)
 
 	printf("OG: %x\n", 0);
 	ft_printf("MY: %x\n", 0);
-}
+} */
