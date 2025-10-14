@@ -10,7 +10,8 @@
                 "${file}",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}",
-                "libft.a"
+                "utils.c",
+                "utils_hex.c"
             ],
             "options": {
                 "cwd": "${fileDirname}"
