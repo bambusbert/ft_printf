@@ -28,7 +28,7 @@
         if (real_printf_ret == ft_printf_ret) { \
             printf(GREEN "OK (return value: %d)\n\n" RESET, real_printf_ret); \
         } else { \
-            printf(RED "FAIL (return values differ! Real: %d, Yours: %d)\n\n" RESET, real_printf_ret, ft_printf_ret); \
+            printf(RED "FAIL (return values differ! Real: %d, Mine: %d)\n\n" RESET, real_printf_ret, ft_printf_ret); \
         } \
     } while (0)
 
@@ -52,7 +52,10 @@ int main(void)
     RUN_TEST("2 Percent Signs", "%%");
     RUN_TEST("Multiple Percent Signs", "%%%%%%");
     RUN_TEST("Percent Sign with text", "Here is a percent sign: %%");
+    //this actually is OK because only cspdiuxX% have to be handled
+    //AND in the original printf it will be considered a warning so it would not compile with our flags
     RUN_TEST("Percent Sign with non valid char", "%.");
+    RUN_TEST("Percent Sign with non valid char - multiple", "%q%ü%z%-");
 
     printf("-----------------------c-----------------------\n");
     // ===================================
@@ -130,5 +133,20 @@ int main(void)
     RUN_TEST("All conversions", "s:%s c:%c p:%p d:%d i:%i u:%u x:%x X:%X %%",
              "str", 'C', &str, -123, -456, 789, 1024, 2048);
 
+    // ===================================
+    // Edge-case tests
+    // ===================================
+    //DO WE HAVE TO HANDLE IT OR IS IT JUST FOR THE BONUS???
+    //RUN_TEST("Width formatting fallback", "%5d",  42);        // width=5, no flag: expect padding spaces (e.g. "   42")
+    RUN_TEST("Unknown format specifier", "%k",   0);         // '%k' is not standard: should print "%k" (count 2)
+    RUN_TEST("NULL string for %s", "%s", (char*)NULL);      // NULL string: should output "(null)"
+    RUN_TEST("Embedded null char in %c", "%c", '\0');      // printing '\0': should output a null char (no visible output, count=1)
+    RUN_TEST("Negative value for %u", "%u", -1);           // negative passed to unsigned: expect max-value (e.g. 4294967295 on 32-bit)
+    RUN_TEST("Max unsigned for %u", "%u", 4294967295U);    // largest unsigned int: ensure full range printed
+    RUN_TEST("Negative value for %x (hex)", "%x", -1);     // negative as hex (lowercase): expect "ffffffff" for 32-bit
+    RUN_TEST("Max unsigned for %x", "%x", 4294967295U);    // largest unsigned int: hex lowercase
+    RUN_TEST("Max unsigned for %X", "%X", 4294967295U);    // largest unsigned int: hex uppercase
+    RUN_TEST("Literal percent sign", "%%");                // "%%" should output "%" and count as 1
+    
     return (0);
 }

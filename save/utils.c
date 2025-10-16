@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils1.c                                           :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: slambert <slambert@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 11:08:29 by slambert          #+#    #+#             */
-/*   Updated: 2025/10/14 11:48:09 by slambert         ###   ########.fr       */
+/*   Updated: 2025/10/16 18:43:52 by slambert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,14 @@ int	ft_putnbr_fd(int n)
 
 int	ft_putnbr_unsigned(unsigned int n)
 {
-	unsigned long	nl;
 	int				i;
 
-	nl = n;
 	i = 0;
-	if (nl < 0)
+	if (n > 9)
 	{
-		i += ft_putchar_fd('-');
-		nl *= -1;
+		i += ft_putnbr_unsigned(n / 10);
 	}
-	if (nl > 9)
-	{
-		i += ft_putnbr_fd(nl / 10);
-	}
-	i += ft_putchar_fd(nl % 10 + '0');
+	i += ft_putchar_fd(n % 10 + '0');
 	return (i);
 }
 

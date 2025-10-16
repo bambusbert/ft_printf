@@ -6,7 +6,7 @@
 /*   By: slambert <slambert@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 11:48:30 by slambert          #+#    #+#             */
-/*   Updated: 2025/10/14 11:49:53 by slambert         ###   ########.fr       */
+/*   Updated: 2025/10/16 18:43:15 by slambert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	ft_putnbr_hex_lowercase(unsigned int num)
 
 int	ft_putnbr_hex_pointer(unsigned long num)
 {
-	int	ret;
+	int ret;
 
 	ret = 0;
 	if (num > 15)

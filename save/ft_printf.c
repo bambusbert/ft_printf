@@ -6,7 +6,7 @@
 /*   By: slambert <slambert@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 14:38:27 by slambert          #+#    #+#             */
-/*   Updated: 2025/10/14 11:48:57 by slambert         ###   ########.fr       */
+/*   Updated: 2025/10/16 18:53:57 by slambert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,23 @@ int	pointer_handler(va_list ap);
 int	ft_printf(const char *fmt, ...)
 {
 	va_list	ap;
-	char	*p;
 	int		i;
 	int		ret;
 
+	if (!fmt)
+		return (-1);
+	if (fmt[0] == '%' && fmt[1] == '\0')
+		return (-1);
 	va_start(ap, fmt);
-	p = (char *)fmt;
 	i = 0;
 	ret = 0;
-	while (p[i++])
+	while (fmt[i++])
 	{
-		if (p[i - 1] != '%')
-			ret += ft_putchar_fd(p[i - 1]);
+		if (fmt[i - 1] != '%')
+			ret += ft_putchar_fd(fmt[i - 1]);
 		else
 		{
-			ret += dispatcher(ap, p[i]);
+			ret += dispatcher(ap, fmt[i]);
 			i++;
 		}
 	}
@@ -49,13 +51,13 @@ int	dispatcher(va_list ap, char c)
 	else if (c == 'i' || c == 'd')
 		return (ft_putnbr_fd(va_arg(ap, int)));
 	else if (c == 'u')
-		return (ft_putnbr_unsigned(va_arg(ap, int)));
+		return (ft_putnbr_unsigned(va_arg(ap, unsigned int)));
 	else if (c == 'p')
 		return (pointer_handler(ap));
 	else if (c == 'X')
-		return (ft_putnbr_hex(va_arg(ap, int)));
+		return (ft_putnbr_hex(va_arg(ap, unsigned int)));
 	else if (c == 'x')
-		return (ft_putnbr_hex_lowercase(va_arg(ap, int)));
+		return (ft_putnbr_hex_lowercase(va_arg(ap, unsigned int)));
 	else if (c == '%')
 		return (ft_putchar_fd('%'));
 	else
@@ -70,7 +72,7 @@ int	pointer_handler(va_list ap)
 {
 	unsigned long	pointer_value;
 
-	pointer_value = va_arg(ap, unsigned long);
+	pointer_value = (unsigned long) va_arg(ap, void*);
 	if (pointer_value == 0)
 	{
 		ft_putstr_fd("(nil)");
@@ -82,13 +84,24 @@ int	pointer_handler(va_list ap)
 		return (ft_putnbr_hex_pointer(pointer_value) + 2);
 	}
 }
-
-/*
+/* 
 int	main(void)
 {
 	const char	*p = "%d%d%d";
 	char str[] = "fbnshbvqe";
 
+	// printf("%d\n", ft_printf("%p", 0));
+	// printf("%d\n", printf("%p", 0));
+
+	// printf("OG %d\n", printf("%"));
+	// printf("MY %d\n", ft_printf("%"));
+
+	// printf("OG\n");
+	ft_printf("%");
+	// printf("MY\n");
+	// ft_printf("%");
+	
+	
 	// printf("arguments: %d\n", count_args(p));
 	// ft_printf("asd%ifg%ih", 5, 4);
 	// ft_printf("%i%c%i%i%i\n", 1, 'd', 2, 3, 4);
@@ -125,9 +138,22 @@ int	main(void)
 	// printf("OG %p\n", NULL);
 	// ft_printf("MY %p\n", NULL);
 
-	printf("OG: Pointer: %p\n", &str);
-	ft_printf("MY: Pointer: %p\n", &str);
+	// printf("OG: Pointer: %p\n", &str);
+	// ft_printf("MY: Pointer: %p\n", &str);
 
 	// printf("OG: HEX: %X\n", &str);
 	// ft_printf("MY: HEX: %X\n", &str);
-} */
+
+	// printf("OG: %x\n", 0);
+	// ft_printf("MY: %x\n", 0);
+
+	// printf("OG: %7\n", 0);
+	// ft_printf("MY: %7\n", 0);
+
+	// printf("OG: %\n");
+	// ft_printf("MY: %\n");
+
+	// printf("OG: %\n");
+	// ft_printf("MY: %\n");
+}
+ */
